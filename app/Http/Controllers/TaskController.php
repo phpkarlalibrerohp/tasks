@@ -56,7 +56,7 @@ class TaskController extends Controller {
 
 		//dd($request::all());
 		//$input = Request::all();
-
+		// CHECKER
 		$input = $request->all();
 		// dd($input);
 
