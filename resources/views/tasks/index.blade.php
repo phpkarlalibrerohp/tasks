@@ -19,6 +19,10 @@
 					<input type="checkbox" class="updateTaskStatus" value="{!! $task->id !!}" {!! $task->status == 1 ? 'checked' : '' !!}>
 				</td>
 				<td> {!! $task->title !!}</td>
+			<tr>
+				<td> 
+					<input type="checkbox" class="updateTaskStatus" value="{!! $task->id !!}" {!! $task->status == 1 ? 'checked' : '' !!}>
+				</td>
 				<td> {!! $task->name !!}</td>
 				<td> {!! $task->description !!}</td>
 				<td> {!! $task->deadline !!}</td>
@@ -29,8 +33,6 @@
 			</tr>
 		@endforeach
 	</table>
-
-	{!! var_dump($tasks) !!}
 
 @stop
 

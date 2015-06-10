@@ -20,4 +20,5 @@ class Priority extends Model {
 	{
 		return $this->hasMany('App\Task','id','task_id');
 	}
+
 }

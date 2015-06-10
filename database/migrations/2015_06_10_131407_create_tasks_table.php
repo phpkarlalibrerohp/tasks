@@ -19,12 +19,10 @@ class CreateTasksTable extends Migration {
 			$table->text('description');
 			$table->datetime('deadline');
 			$table->boolean('status');
-			$table->integer('tag_id')->index()->unsigned();
 			$table->integer('priority_id')->index()->unsigned();
 			$table->timestamps();
 
-			$table->foreign('tag_id')->references('id')->on('tags');
-			$table->foreign('priority_id')->references('id')->on('priorities');
+			$table->foreign('priority_id')->references('id')->on('priorities')->onDelete('cascade');
 		});
 	}
 

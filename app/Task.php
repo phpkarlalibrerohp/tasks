@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
+
 class Task extends Model {
 
 	protected $table = 'tasks';
@@ -15,16 +16,8 @@ class Task extends Model {
 		'deadline'
 	];
 
-	public function priority() 
-	{
-		return $this->hasOne('App\Priority','id','priority_id');
 
-		//return $this->hasOne('App\Phone', 'foreign_key'); -> to override the laravel fk convention
-		//return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
-	}
-
-	public function priorities() 
-	{
+	public function priority()	{
 		return $this->belongsTo('App\Priority');
 	}
 
@@ -36,4 +29,5 @@ class Task extends Model {
 			->orderBy('priorities.id','DESC')
 			->get();
 	}
+
 }

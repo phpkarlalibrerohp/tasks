@@ -14,10 +14,13 @@
 		{!! Form::text('name', isset($task) ? $task->name : null , ['class' => 'form-control']) !!}
 	</div>
 	<div class="form-group">
+<<<<<<< HEAD
 		{!! Form::label('priority', 'Priority:') !!}
 		{!! Form::select('priority_id',array('' => '') + $priorities, isset($task) ? $task->priority_id : null, ['class' => 'form-control']) !!}
 	</div>
 	<div class="form-group">
+=======
+>>>>>>> 92d3a9d388b7c917be90758cf62b675475b8b52c
 		{!! Form::label('description', 'Description:') !!}
 		{!! Form::textarea('description',isset($task) ? $task->description : null , ['class' => 'form-control']) !!}
 	</div>

@@ -6,6 +6,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Http\Requests\TaskValidation;
 // use Illuminate\Http\Request;
 
@@ -19,9 +22,8 @@ class TaskController extends Controller {
 	public function index()
 	{
 		//$tasks = Task::all();
-
-		$tasks = Task::allTasksByDateAndPrio();
-		return view('tasks.index', compact('tasks','priorities'));
+		$tasks = Task::all();
+		return view('tasks.index', compact('tasks'));
 	}
 
 	/**
@@ -31,8 +33,12 @@ class TaskController extends Controller {
 	 */
 	public function create()
 	{
-
 		$priorities = Priority::lists('title','id','color');
+		$tempPrio = array(
+			'Low'		=>	1,
+			'Average'	=>	2,
+			'High'		=>	3
+		);
 
 		for($x = 0; $x<= 12; $x++) {
 			$dateHour[] = sprintf("%02d", $x);
@@ -95,6 +101,12 @@ class TaskController extends Controller {
 		//$priorities = Priority::all();
 		$priorities = Priority::lists('title','id','color');
 
+		$tempPrio = array(
+			'Low'		=>	1,
+			'Average'	=>	2,
+			'High'		=>	3
+		);
+
 		for($x = 0; $x<= 12; $x++) {
 			$dateHour[] = sprintf("%02d", $x);
 		}
@@ -105,7 +117,6 @@ class TaskController extends Controller {
 
 		$task = Task::findOrFail($id);
 
-		//return $task->priority;
 		// $x = Carbon::parse($task->deadline);
 		// dd($x);
 		
@@ -132,7 +143,7 @@ class TaskController extends Controller {
 	 * @return Response
 	 */
 	public function update(TaskValidation $request)
-	{
+	
 		$input = $request->all();
 
 		$deadline = $input['deadlineDate'].' '.sprintf("%02d", $input['deadlineTimeHour']).':'

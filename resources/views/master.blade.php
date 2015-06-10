@@ -4,7 +4,11 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+=======
+	<meta name="_token" content="{{ csrf_token() }}" />
+>>>>>>> 92d3a9d388b7c917be90758cf62b675475b8b52c
 	<title>Laravel</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
@@ -70,6 +74,11 @@
 			            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			        }
 				});
+			    $.ajaxSetup({
+			        headers: {
+			            'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+			        }
+			    });
 			});
 		});
 	</script>
