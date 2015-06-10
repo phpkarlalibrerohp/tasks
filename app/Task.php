@@ -10,7 +10,13 @@ class Task extends Model {
 		'name',
 		'description',
 		'status',
+		'priority_id',
 		'deadline'
 	];
+
+	public function priority()
+	{
+		return $this->belongsTo('App\Priority');
+	}
 
 }
