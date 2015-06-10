@@ -1,5 +1,5 @@
 <?php namespace App\Http\Requests;
-
+use Carbon\Carbon;
 use App\Http\Requests\Request;
 
 class TaskValidation extends Request {
@@ -24,7 +24,15 @@ class TaskValidation extends Request {
 		return [
 			'name' 			=> 		'required|min:3',
 			'description'	=>		'required|min:3',
-			'deadlineDate'	=>		'required|date_format:Y-m-d|after:yesterday',
+			'priority_id'		=>		'required',
+			'deadlineDate'	=>		'required|date_format:Y-m-d|after:'. Carbon::now()->format('m/d/Y')
+		];
+	}
+
+	public function messages() 
+	{
+		return [
+			'deadlineDate.after'	=>		'deadline checker custom message'
 		];
 	}
 

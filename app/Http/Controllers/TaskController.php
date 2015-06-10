@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Task;
+use App\Priority;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -18,7 +19,7 @@ class TaskController extends Controller {
 	public function index()
 	{
 		$tasks = Task::all();
-		return view('tasks.index', compact('tasks'));
+		return view('tasks.index', compact('tasks','priorities'));
 	}
 
 	/**
@@ -29,11 +30,7 @@ class TaskController extends Controller {
 	public function create()
 	{
 
-		$tempPrio = array(
-			'Low'		=>	1,
-			'Average'	=>	2,
-			'High'		=>	3
-		);
+		$priorities = Priority::lists('title','id','color');
 
 		for($x = 0; $x<= 12; $x++) {
 			$dateHour[] = sprintf("%02d", $x);
@@ -43,7 +40,7 @@ class TaskController extends Controller {
 			$dateMinSec[] = sprintf("%02d", $x);
 		}
 
-		return view('tasks.create', compact('tempPrio','dateHour','dateMinSec'));
+		return view('tasks.create', compact('priorities','dateHour','dateMinSec'));
 	}
 
 	/**
@@ -93,11 +90,8 @@ class TaskController extends Controller {
 	public function edit($id)
 	{
 
-		$tempPrio = array(
-			'Low'		=>	1,
-			'Average'	=>	2,
-			'High'		=>	3
-		);
+		//$priorities = Priority::all();
+		$priorities = Priority::lists('title','id','color');
 
 		for($x = 0; $x<= 12; $x++) {
 			$dateHour[] = sprintf("%02d", $x);
@@ -109,6 +103,7 @@ class TaskController extends Controller {
 
 		$task = Task::findOrFail($id);
 
+		//return $task->priority;
 		// $x = Carbon::parse($task->deadline);
 		// dd($x);
 		
@@ -122,8 +117,9 @@ class TaskController extends Controller {
 		$dateTime[] = $time[2];
 		$dateTime[] = $date[2];
 
+
 		//return $dateTime;
-		return view('tasks.create', compact('tempPrio','dateHour','dateMinSec','task', 'dateTime'));
+		return view('tasks.create', compact('priorities','dateHour','dateMinSec','task', 'dateTime'));
 
 	}
 
@@ -133,9 +129,9 @@ class TaskController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update()
+	public function update(TaskValidation $request)
 	{
-		$input = Request::all();
+		$input = $request->all();
 
 		$deadline = $input['deadlineDate'].' '.sprintf("%02d", $input['deadlineTimeHour']).':'
 			.sprintf("%02d", $input['deadlineTimeMin']).':'.sprintf("%02d", $input['deadlineTimeSec'])
@@ -146,6 +142,7 @@ class TaskController extends Controller {
 		$task['name'] = $input['name'];
 		$task['description'] = $input['description'];
 		$task['status'] = $status;
+		$task['priority_id'] = $input['priority_id'];
 		$task['deadline'] = date("Y-m-d H:i:s", $deadline);
 		Task::where('id', '=', $input['id'])->update($task);
 		return redirect('tasks');
