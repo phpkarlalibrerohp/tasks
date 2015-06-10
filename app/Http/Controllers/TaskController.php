@@ -18,7 +18,9 @@ class TaskController extends Controller {
 	 */
 	public function index()
 	{
-		$tasks = Task::all();
+		//$tasks = Task::all();
+
+		$tasks = Task::allTasksByDateAndPrio();
 		return view('tasks.index', compact('tasks','priorities'));
 	}
 

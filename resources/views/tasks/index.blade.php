@@ -7,16 +7,18 @@
 	<table class="table">	
 		<tr>
 			<th></th>
+			<th>Priority</th>
 			<th>Name</th>
 			<th>Description</th>
 			<th>Deadline</th>
 			<th></th>
 		</tr>
 		@foreach ($tasks as $task)
-			<tr>
+			<tr style="background-color: {{$task->color}}">
 				<td> 
 					<input type="checkbox" class="updateTaskStatus" value="{!! $task->id !!}" {!! $task->status == 1 ? 'checked' : '' !!}>
 				</td>
+				<td> {!! $task->title !!}</td>
 				<td> {!! $task->name !!}</td>
 				<td> {!! $task->description !!}</td>
 				<td> {!! $task->deadline !!}</td>
@@ -27,6 +29,8 @@
 			</tr>
 		@endforeach
 	</table>
+
+	{!! var_dump($tasks) !!}
 
 @stop
 

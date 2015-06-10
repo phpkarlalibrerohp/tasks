@@ -11,6 +11,7 @@ class Task extends Model {
 		'name',
 		'description',
 		'status',
+		'priority_id',
 		'deadline'
 	];
 
@@ -27,10 +28,10 @@ class Task extends Model {
 		return $this->belongsTo('App\Priority');
 	}
 
-	public function allTasksByDateAndPrio() {
+	public function scopeAllTasksByDateAndPrio() {
 		return DB::table('tasks')
-			->join('priorities','tasks.priority_id','=','priorities','=','id')
-			->select('tasks.*','priorities.title')
+			->join('priorities','tasks.priority_id','=','priorities.id')
+			->select('tasks.*','priorities.title', 'priorities.color')
 			->orderBy('tasks.deadline','DESC')
 			->orderBy('priorities.id','DESC')
 			->get();
