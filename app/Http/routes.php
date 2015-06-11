@@ -32,3 +32,19 @@ Route::post('task/delete', 'TaskController@destroy');
 Route::get('priorities', 'PriorityController@index');
 Route::get('priority/edit/{id}', 'PriorityController@edit');
 Route::post('priority', 'PriorityController@update');
+
+Route::get('checker', function() {
+
+	$tasks = App\Task::all();
+
+	foreach($tasks as $task) 
+	{
+		// echo '<pre>';
+		// print_r($task->tags);
+		// echo '</pre>';
+
+		echo $task->tags;
+		echo '<br>';
+	}
+
+});

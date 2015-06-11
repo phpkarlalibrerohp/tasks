@@ -2,13 +2,11 @@
 
 use App\Task;
 use App\Priority;
+use App\Tag;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use App\Http\Requests\TaskValidation;
 // use Illuminate\Http\Request;
 
@@ -34,11 +32,7 @@ class TaskController extends Controller {
 	public function create()
 	{
 		$priorities = Priority::lists('title','id','color');
-		$tempPrio = array(
-			'Low'		=>	1,
-			'Average'	=>	2,
-			'High'		=>	3
-		);
+		$tagss = Tag::all();
 
 		for($x = 0; $x<= 12; $x++) {
 			$dateHour[] = sprintf("%02d", $x);
@@ -48,7 +42,7 @@ class TaskController extends Controller {
 			$dateMinSec[] = sprintf("%02d", $x);
 		}
 
-		return view('tasks.create', compact('priorities','dateHour','dateMinSec'));
+		return view('tasks.create', compact('tagss','priorities','dateHour','dateMinSec'));
 	}
 
 	/**
@@ -60,6 +54,7 @@ class TaskController extends Controller {
 	{
 
 		//dd($request::all());
+		//dd(Request::all());
 		//$input = Request::all();
 		// CHECKER
 		$input = $request->all();
@@ -72,6 +67,7 @@ class TaskController extends Controller {
 		$current = strtotime(carbon::now());
 		$deadline = strtotime($deadline);
 		$input['deadline'] = date("Y-m-d H:i:s", $deadline);
+		$input['user_id'] = 0;
 		//return $deadline.'<br>'.date("Y-m-d H:i:s", $deadline);
 		//return $deadline.'<br>'.$current;
 		Task::create($input);
@@ -143,7 +139,7 @@ class TaskController extends Controller {
 	 * @return Response
 	 */
 	public function update(TaskValidation $request)
-	
+	{
 		$input = $request->all();
 
 		$deadline = $input['deadlineDate'].' '.sprintf("%02d", $input['deadlineTimeHour']).':'
@@ -184,4 +180,15 @@ class TaskController extends Controller {
 		return redirect('tasks');
 	}
 
+	/** 
+		Laracast Samples
+	**/
+	// Sample on how to validate directly in the controller
+	// public function validateTest(Request $request) 
+	// {
+	// 	$this->validate($request, ['name' => 'required', 'description' => 'required']);
+	// 	Task::create($request->all());
+
+	// 	return redirect('tasks');
+	// }
 }

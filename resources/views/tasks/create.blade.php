@@ -14,13 +14,10 @@
 		{!! Form::text('name', isset($task) ? $task->name : null , ['class' => 'form-control']) !!}
 	</div>
 	<div class="form-group">
-<<<<<<< HEAD
 		{!! Form::label('priority', 'Priority:') !!}
 		{!! Form::select('priority_id',array('' => '') + $priorities, isset($task) ? $task->priority_id : null, ['class' => 'form-control']) !!}
 	</div>
 	<div class="form-group">
-=======
->>>>>>> 92d3a9d388b7c917be90758cf62b675475b8b52c
 		{!! Form::label('description', 'Description:') !!}
 		{!! Form::textarea('description',isset($task) ? $task->description : null , ['class' => 'form-control']) !!}
 	</div>
@@ -43,22 +40,20 @@
 		{!! Form::checkbox('status', 1, isset($task) ? $task->status == 1 ? true: null : null ) !!} Done <br>
 	</div>
 	<div class="form-group">
+		{!! Form::label('tags', 'Tags:') !!} <br>
+		@foreach($tagss as $tag)
+			{!! Form::checkbox('tags[]', $tag->id, null ).' '.$tag->name !!}  <br>
+		@endforeach
+	</div>
+	<div class="form-group">
 		@if (!isset($task)) 
 			{!! Form::submit('Add Task', ['class' => 'btn btn-primary form-control']); !!}
 		@else 
 			{!! Form::submit('Edit Task', ['class' => 'btn btn-primary form-control']); !!}
 		@endif
 	</div>
-	@if (count($errors) > 0)
-	    <div class="alert alert-danger">
-	        <ul>
-	            @foreach ($errors->all() as $error)
-	                <li>{{ $error }}</li>
-	            @endforeach
-	        </ul>
-	    </div>
-	@endif
 {!! Form::close() !!}
 
+	@include('errors.list')
 
 @stop
