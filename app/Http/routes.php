@@ -39,11 +39,10 @@ Route::get('checker', function() {
 
 	foreach($tasks as $task) 
 	{
-		// echo '<pre>';
-		// print_r($task->tags);
-		// echo '</pre>';
-
-		echo $task->tags;
+		echo $task['name'].'<br>';
+		foreach($task->tags as $tag) {
+			echo  $tag['name'].'<br>';
+		}
 		echo '<br>';
 	}
 
